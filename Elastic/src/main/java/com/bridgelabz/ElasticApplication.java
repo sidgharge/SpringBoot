@@ -31,12 +31,12 @@ public class ElasticApplication implements CommandLineRunner {
 	public void run(String... arg0) throws Exception {
 		printElasticSearchInfo();
 
-		bookService.save(new Book("1001", "Elasticsearch Basics", "Rambabu Posa"));
-		bookService.save(new Book("1002", "Apache Lucene Basics", "Rambabu Posa"));
+		bookService.save(new Book("1001", "Elasticsearch Basics", "Akash Badave"));
+		bookService.save(new Book("1002", "Apache Lucene Basics", "Nilesh Badave"));
 		bookService.save(new Book("1003", "Apache Solr Basics", "Rambabu Posa"));
 
 		// fuzzey search
-		Page<Book> books = bookService.findByAuthor("Rambabu", new PageRequest(0, 10));
+		Page<Book> books = bookService.findByAuthor("Badave", new PageRequest(0, 10));
 
 		// List<Book> books = bookService.findByTitle("Elasticsearch Basics");
 
