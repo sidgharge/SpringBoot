@@ -41,9 +41,5 @@ public class EsConfig {
 		return client;
 	}
 	
-	@PreDestroy
-	public void closeClient() {
-		System.out.println("Closing client....");
-		transportClient().close();
-	}
+	
 }
