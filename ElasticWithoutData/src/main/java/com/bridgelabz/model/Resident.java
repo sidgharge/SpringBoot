@@ -1,6 +1,8 @@
 package com.bridgelabz.model;
 
-public class Resident {
+import java.io.Serializable;
+
+public class Resident implements Serializable {
 
 	private int residentId;
 
