@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Resident implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private int residentId;
 
 	private String name;

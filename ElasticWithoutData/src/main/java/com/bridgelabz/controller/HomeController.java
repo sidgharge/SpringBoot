@@ -72,7 +72,7 @@ public class HomeController {
 	}
 
 	@PostMapping("/resident")
-	public String addResident(@RequestBody Resident resident) {
+	public void addResident(@RequestBody Resident resident) {
 		
 		jmsTemplate.send(new MessageCreator() {
 			
@@ -83,19 +83,6 @@ public class HomeController {
 			}
 		});
 		
-		
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			String json = mapper.writeValueAsString(resident);
-			IndexRequest indexRequest = new IndexRequest("elasticsp2", "resident",
-					String.valueOf(resident.getResidentId()));
-			indexRequest.source(json, XContentType.JSON);
-			IndexResponse indexResponse = client.index(indexRequest);
-			return indexResponse.getId();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "No!!!";
 	}
 
 	@GetMapping("get/{id}")

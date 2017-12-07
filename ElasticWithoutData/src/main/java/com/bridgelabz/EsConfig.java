@@ -1,14 +1,9 @@
 package com.bridgelabz;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.TransportAddress;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -6,26 +6,24 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.listener.DefaultMessageListenerContainer;
+import org.springframework.jms.listener.adapter.MessageListenerAdapter;
+
+import com.bridgelabz.listener.ResidentListener;
 
 
 @Configuration
-@EnableJms
+//@EnableJms
 public class JmsConfig {
 
 	
-	//@Bean
-	public ActiveMQConnectionFactory activeMQConnectionFactory() {
-		ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-		factory.setTrustAllPackages(true);
-		return factory;
-	}
-	
 	@Bean
 	public CachingConnectionFactory cachingConnectionFactory() {
-		return new CachingConnectionFactory(activeMQConnectionFactory());
+		ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+		factory.setTrustAllPackages(true);
+		return new CachingConnectionFactory(factory);
 	}
 	
 	@Bean
@@ -39,6 +37,24 @@ public class JmsConfig {
 		template.setConnectionFactory(cachingConnectionFactory());
 		template.setDefaultDestination(queue());
 		return template;
+	}
+	
+	@Bean
+	public ResidentListener residentListner() {
+		return new ResidentListener();
+	}
+	
+	@Bean
+	public DefaultMessageListenerContainer consumer() {
+		DefaultMessageListenerContainer dmlc = new DefaultMessageListenerContainer();
+		MessageListenerAdapter adapter = new MessageListenerAdapter();
+		//ResidentListener listener = new ResidentListener();
+		//adapter.setDefaultResponseQueueName("RESIDENT_QUEUE");
+		adapter.setDelegate(residentListner());
+		dmlc.setMessageListener(adapter);
+		dmlc.setDestinationName("RESIDENT_QUEUE");
+		dmlc.setConnectionFactory(cachingConnectionFactory());
+		return dmlc;
 	}
 	
 }
