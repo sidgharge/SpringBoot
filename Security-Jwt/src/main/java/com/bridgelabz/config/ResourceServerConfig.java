@@ -23,7 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         resources.resourceId(resourceIds).tokenServices(tokenServices);
     }
 
-    @Override
+    /*@Override
     public void configure(HttpSecurity http) throws Exception {
                 http
                 .requestMatchers()
@@ -31,5 +31,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/actuator/**", "/api-docs/**").permitAll()
                 .antMatchers("/springjwt/**" ).authenticated();
+    }*/
+    
+    
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+                http
+                .requestMatchers()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/actuator/**", "/api-docs/**").permitAll()
+                .and().
+                authorizeRequests().antMatchers("/springjwt/users/**" ).hasAnyRole("STANDARD_USER").anyRequest().authenticated()
+                .and()
+                .authorizeRequests().antMatchers("/springjwt/admin/**").hasAnyRole("ADMIN_USER", "STANDARD_USER").anyRequest().authenticated();
     }
 }
