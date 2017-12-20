@@ -14,12 +14,16 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bridgelabz.model.Resident;
+import com.bridgelabz.utility.ElasticUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ResidentListener implements MessageListener {
 	
 	@Autowired
 	RestHighLevelClient client;
+	
+	@Autowired
+	ElasticUtility utility;
 
 	@Override
 	public void onMessage(Message message) {
@@ -29,22 +33,10 @@ public class ResidentListener implements MessageListener {
 			Resident resident = (Resident) objectMessage.getObject();
 			System.out.println("Got resident: " + resident);
 			
+			String id = utility.save(resident, "resident", "resident", String.valueOf(resident.getResidentId()));
+			System.out.println("Resident added at index: " + id);
 			
-			
-			ObjectMapper mapper = new ObjectMapper();
-			try {
-				String json = mapper.writeValueAsString(resident);
-				IndexRequest indexRequest = new IndexRequest("resident", "resident",
-						String.valueOf(resident.getResidentId()));
-				indexRequest.source(json, XContentType.JSON);
-				IndexResponse indexResponse = client.index(indexRequest);
-				System.out.println("Resident added at index: " + indexResponse.getId());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
-		} catch (JMSException e) {
+		} catch (JMSException | IOException e) {
 			e.printStackTrace();
 		}
 	}
