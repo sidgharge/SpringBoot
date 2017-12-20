@@ -34,7 +34,7 @@ public class ResidentListener implements MessageListener {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				String json = mapper.writeValueAsString(resident);
-				IndexRequest indexRequest = new IndexRequest("elasticsp2", "resident",
+				IndexRequest indexRequest = new IndexRequest("resident", "resident",
 						String.valueOf(resident.getResidentId()));
 				indexRequest.source(json, XContentType.JSON);
 				IndexResponse indexResponse = client.index(indexRequest);

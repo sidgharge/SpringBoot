@@ -126,7 +126,7 @@ public class HomeController {
 
 		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 		sourceBuilder.query(builder);
-		SearchRequest searchRequest = new SearchRequest("elasticsp2").types("resident").source(sourceBuilder);
+		SearchRequest searchRequest = new SearchRequest("resident").types("resident").source(sourceBuilder);
 		SearchResponse searchResponse;
 		try {
 			searchResponse = client.search(searchRequest);
