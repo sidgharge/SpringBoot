@@ -28,7 +28,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		Map<String, String> details = new LinkedHashMap<>((Map<String, String>) authentication.getDetails());
+		Map<String, String> details = (LinkedHashMap<String, String>) authentication.getDetails();
 				//(Map<String, String>) authentication.getDetails();
 		String id = details.get("id");
 		String otp = details.get("otp");
@@ -58,7 +58,6 @@ public class CustomAuthProvider implements AuthenticationProvider {
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

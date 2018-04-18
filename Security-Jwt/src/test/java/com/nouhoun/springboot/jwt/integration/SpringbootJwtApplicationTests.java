@@ -1,4 +1,4 @@
-package com.nouhoun.springboot.jwt.integration;
+/*package com.nouhoun.springboot.jwt.integration;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,3 +14,4 @@ public class SpringbootJwtApplicationTests {
 	}
 
 }
+*/

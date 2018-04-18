@@ -31,15 +31,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${security.signing-key}")
 	private String signingKey;
 
-	/*@Value("${security.encoding-strength}")
-	private Integer encodingStrength;*/
+	/*
+	 * @Value("${security.encoding-strength}") private Integer encodingStrength;
+	 */
 
 	@Value("${security.security-realm}")
 	private String securityRealm;
 
-	/*@Autowired
-	private UserDetailsService userDetailsService;*/
-	
+	/*
+	 * @Autowired private UserDetailsService userDetailsService;
+	 */
+
 	@Bean
 	public AuthenticationProvider customAuthProvider() {
 		return (AuthenticationProvider) new CustomAuthProvider();
@@ -48,28 +50,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
-		//return super.authenticationManager();
+		// return super.authenticationManager();
 		return new ProviderManager(Arrays.asList(customAuthProvider()));
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		/*auth.userDetailsService(userDetailsService)
-		        .passwordEncoder(new ShaPasswordEncoder(encodingStrength));*/
+		/*
+		 * auth.userDetailsService(userDetailsService) .passwordEncoder(new
+		 * ShaPasswordEncoder(encodingStrength));
+		 */
 		super.configure(auth);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-		        .sessionManagement()
-		        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		        .and()
-		       // .httpBasic()
-		       // .realmName(securityRealm)
-		       // .and()
-		        .csrf()
-		        .disable();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				// .httpBasic()
+				// .realmName(securityRealm)
+				// .and()
+				.csrf().disable();
 
 	}
 
@@ -86,7 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	@Primary //Making this primary to avoid any accidental duplication with another token service instance of the same name
+	@Primary // Making this primary to avoid any accidental duplication with another token
+				// service instance of the same name
 	public DefaultTokenServices tokenServices() {
 		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
 		defaultTokenServices.setTokenStore(tokenStore());

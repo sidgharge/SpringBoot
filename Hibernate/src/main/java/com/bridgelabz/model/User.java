@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table
 public class User {
@@ -14,6 +16,9 @@ public class User {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	/*@Id
+	@GenericGenerator(name = "sequence_sp_id", strategy = "com.bridgelabz.service.UserIdGenerator")
+	@GeneratedValue(generator = "sequence_sp_id")*/
 	private int id;
 
 	private String name;
