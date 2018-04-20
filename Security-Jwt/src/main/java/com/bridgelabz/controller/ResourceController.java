@@ -20,14 +20,14 @@ public class ResourceController {
 	private GenericService userService;
 
 	@RequestMapping(value = "/users/{name}")
-	@PreAuthorize("hasAnyAuthority('STANDARD_USER')")
+	//@PreAuthorize("hasAnyAuthority('STANDARD_USER')")
 	public User getUser(@PathVariable("name") String username) {
 		System.out.println("Name got: "+SecurityContextHolder.getContext().getAuthentication());
 		return userService.findByUsername(username);
 	}
 
 	@RequestMapping(value = "/admin/users", method = RequestMethod.GET)
-	@PreAuthorize("hasAuthority('ADMIN_USER')")
+	//@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public List<User> getUsers() {
 		System.out.println("Name got as: "+SecurityContextHolder.getContext().getAuthentication());
 		return userService.findAllUsers();
